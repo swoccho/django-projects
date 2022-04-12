@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Voting System</title>
+</head>
+<body>
+    <form action="{% url 'polls:vote' question.id %} " method="post">
+
+        {% csrf_token %}
+        <fieldset>
+            <legend>
+                <h1>{{question.question_text}}</h1>
+            </legend>
+            <strong>{% if error_massage %} <p>{{error_massage}}</p></strong>
+            {%endif %}
+
+            {%for choice in question.choice_set.all %}
+            <input type="radio" name="choice" id="{{forloop.counter}}" value="{{choice.id}}"   >
+            <label for="{{forloop.counter}}">{{choice.choice_text}}</label> <br>
+            {%endfor %}
+
+
+        </fieldset>
+
+
+        <input type="submit" value="vote"> <br>
+
+        <strong> <a href="{% url 'polls:index' %}"> See all Question</a></strong>
+
+
+
+    </form>
+
+
+
+</body>
+</html>
