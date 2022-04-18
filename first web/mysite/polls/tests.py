@@ -1,4 +1,5 @@
 
+from http import client
 from time import time
 from urllib import response
 from django.urls import reverse
@@ -41,6 +42,8 @@ class QuestionIndexViewsTest(TestCase):
         self.assertEqual(response.status_code,200)
         self.assertContains(response,"No polls are available")
         self.assertQuerysetEqual(response.context['latest_question_list'] ,[])
+
+
 
 
     def test_past_question(self):
@@ -95,6 +98,39 @@ class QuestionResultViewTests(TestCase):
         response = self.client.get(reverse('polls:results' , args=(past_question.id,)))
 
         self.assertContains(response,past_question.question_text)
+
+
+
+def create_choice(question_text,days,choice_text=0):
+    question = create_question(question_text,days)
+    if choice_text:
+        question.choice_set.create(choice_text= choice_text,vote= 0)
+        return question
+
+    else:
+        return question
+
+
+class ChoiceResultTests(TestCase):
+
+    def test_no_choice(self):
+        question = create_choice(question_text='question with no choice' , days=-2)
+        response= self.client.get(reverse('polls:results' , args=(question.id,) ))
+
+        self.assertEqual(question.choice_set.count(),0)
+        self.assertQuerysetEqual(question.choice_set.all(),[])
+
+    def test_with_choice(self):
+        question = create_choice(question_text='with choice' , days=-1,choice_text='hello')
+        self.assertEqual(question.choice_set.count() , 1)
+
+
+
+
+
+
+
+
 
 
 

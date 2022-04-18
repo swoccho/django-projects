@@ -1,9 +1,10 @@
+from asyncore import poll
 from django.utils import timezone
 from django.shortcuts import render , get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponse
 from django.http import Http404
 from django.urls import reverse
-from .models import Question ,Choice
+from .models import Question ,Choice 
 from django.views import generic
 
 
