@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HomePage</title>
+</head>
+<body>
+    <h1>Welcome to ARS Text Analyzer</h1> 
+    <h3>Enter your text Below-</h3>
+    <strong>{% if error_massage %} <p style="color: red;">{{error_massage}}</p></strong>
+    {% endif %}
+    <form action="/analyze"  method="post">{%csrf_token%}
+
+
+        <textarea name="text" cols="30" rows="10" style="width: 1332px; height: 124px;"></textarea>
+
+        <input type="checkbox" name="removepunc" > Remove Punctuations <br>
+        <input type="checkbox" name="uppercase"> Capitalize All <br>
+
+        <input type="checkbox" name="removenewline" > Remove Newlines <br>
+        <input type="checkbox" name="extraspaceremove" > Remove Extra Spaces
+        <input type="checkbox" name="charcount" >  Character Count
+        <input type="checkbox" name="wordcount" > Word Count
+
+        <button type="submit">Analyze Text</button>
+
+
+
+    </form>
+</body>
+</html>
