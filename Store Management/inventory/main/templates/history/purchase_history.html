@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Purchase History</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+</head>
+<body>
+
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{% url 'main:homepage'%}">ARS Inventory</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link " aria-current="page" href="{% url 'main:homepage'%}">Home</a>
+                </li>
+
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Products
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="" data-bs-toggle="modal" data-bs-target="#addnewproductModal">Add New Products</a></li>
+                        <li><a class="dropdown-item" href="{% url 'main:all_products'%}">All Products</a></li>
+
+                    </ul>
+                </li>
+
+
+
+                <li class="nav-item  ">
+                    <a class="nav-link active "   aria-current="page" href="{% url 'main:purchase_history'%}">Purchase History</a>
+                </li>
+
+
+            </ul>
+
+
+
+            <li class="nav-item">
+                <a class="nav-link " style="color:#8b8f8c" aria-current="page" href="{% url 'main:sell_history'%}">Sell History</a>
+            </li>
+
+
+            <form class="d-flex" action="{% url 'authentication:logout' %}">
+                <li class="nav-item">
+                    <a class="nav-link active" style="color:white" aria-current="page" href="{% url 'main:homepage'%}">Hello, {{user.username}}</a>
+                </li>
+                <button class="btn btn-outline-success" type="submit">Logout</button>
+            </form>
+        </div>
+    </div>
+</nav>
+
+<!-- Add new product Modal -->
+<div class="modal fade" id="addnewproductModal" tabindex="-1" aria-labelledby="addnewproductModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addnewproductModalLabel">Please login to procceed..</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <h5>
+                    {% for message in messages %}
+                    {{ message}}
+
+                    {% endfor %}
+                </h5>
+                <form action="accounts/auth/login/" method="POST">
+                    {% csrf_token %}
+                    <div class="form-floating mb-3">
+                        <input type="text" name="username" class="form-control" id="floatingUsername"
+                               placeholder="Username" required>
+                        <label for="floatingUsername">Username</label>
+                    </div>
+                    <div class="form-floating">
+                        <input type="password" name="password" class="form-control" id="floatingPassword"
+                               placeholder="Password" required>
+                        <label for="floatingPassword">Password</label>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary ">Login</button>
+
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+</body>
+</html>
